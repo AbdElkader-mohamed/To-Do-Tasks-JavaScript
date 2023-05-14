@@ -248,14 +248,14 @@ color: var(--dark-color);
 /* end time date  */
 /* start weeks  */
 .card:not(.task) {
-  height: calc((100vh - 150px) / 2) ;
+  height: calc((100vh - 170px) / 2) ;
 }
 .card.last:hover,
 .card:not(.task):hover {
   background-color: rgba(255, 255, 255, 0.7);
 }
 .card.last{
-  height: calc((100vh - 120px)) ;
+  height: calc((100vh - 140px)) ;
 }
 .card {
   background-color: rgba(255, 255, 255, 0.5);
