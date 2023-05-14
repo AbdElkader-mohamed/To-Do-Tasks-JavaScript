@@ -87,13 +87,14 @@ checker(options);
 
 handel(btnAdd);
 
+editingAnimation();
+
 editTaskNote();
 
 formAdd.addEventListener("submit", mainAddingFN);
 
 formEdit.addEventListener("submit", mainEditingFN)
 
-editingAnimation();
 
 dragDrop();
 let drag = null;
@@ -263,13 +264,15 @@ function dataHandel(target,taskId,taskTitle,taskContent,taskDate,taskTime,userNa
 };
 // function for set different color to edited task 
 function editingAnimation() {
-  JSON.parse(localStorage.getItem("tasks")).forEach(task => {
-    if (task.edit) {
-      document.querySelectorAll(".task").forEach(taskBody => {
-        if (taskBody.getAttribute("data-id") == task.id) taskBody.classList.add("edited");
-      })
-    }
-  })
+  if (localStorage.getItem("tasks")) {
+    JSON.parse(localStorage.getItem("tasks")).forEach(task => {
+      if (task.edit) {
+        document.querySelectorAll(".task").forEach(taskBody => {
+          if (taskBody.getAttribute("data-id") == task.id) taskBody.classList.add("edited");
+        })
+      }
+    })
+  }
 }
 // function to drag and drop tasks  and handel data in it 
 function dragDrop() {
@@ -301,4 +304,3 @@ weeks.forEach(week => {
   } )
 })
 }
-
