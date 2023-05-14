@@ -9,7 +9,7 @@
   --dinger:#f95f6d;
   --success:#3dd083;
   --warning:#f7bb4d;
-  --rgba-success:rgba(62, 141, 100, 0.3);
+  --rgba-success:rgba(111, 173, 142, 0.4);
   --rgba-dinger:rgba(249, 97, 109, 0.1);
   --rgba-warning:rgba(247, 187, 77, 0.1) ;
 
@@ -32,7 +32,7 @@ body {
 .slider {
   position: relative;
   background-size: cover;
-  animation: bgChang 15s linear infinite alternate;
+  animation: bgChang 30s linear infinite alternate;
 }
 .slider::before{
   content: '';
@@ -53,12 +53,12 @@ body {
   z-index: 7;
   opacity: 1;
   visibility: visible;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   transition: all .2s linear;
 }
 @keyframes bgChang {
   0%,20%{
-  background: url(../assets/image/5.jpg) center;
+  background: url(../assets/image/toDoBg3.jpg) center;
   background-size: cover;
   }
   30%,40%{
@@ -68,15 +68,13 @@ body {
   50%,60%{
   background: url(../assets/image/7.jpg) center;
   background-size: cover;
-
   }
   70%,80%{
   background: url(../assets/image/8.jpg) center;
   background-size: cover;
-
   }
   90%,100%{
-  background: url(../assets/image/toDoBg.jpg) center;
+  background: url(../assets/image/toDoBg4.jpg) center;
   background-size: cover;
   }
 }
