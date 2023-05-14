@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do list</title>
+  <!-- font awesome -->
+  <link rel="stylesheet" href="./css/vendors/all.min.css">
+  <!-- bootstrap.min -->
+  <link rel="stylesheet" href="./css/vendors/bootstrap.min.css">
+  <!-- main style -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="slider" >
+  <!-- start menu values  -->
+  <div class="overlay"></div>
+  <nav>
+    <div class="container">
+      <div class="menu-head d-flex align-items-center justify-content-between">
+        <h5>Add New Task</h5>
+        <button class="btn border-0" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formAdd" action="javascript:void(0)">
+        <div class="mb-3">
+          <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label for="UserName" class="form-label">Enter User Name</label>
+              <input type="text" name="UserName" class="form-control" required id="UserName" placeholder="What is your Name ?">
+            </div>
+            <div class="col-md-6 align-self-end">
+              <label for="daySelect" class="form-label">Enter Day</label>
+              <div class="inputs dropdown form-control" id="daySelect">
+                <span class="value" ></span>
+                <ul class="form-list list-unstyled">
+                    <li class="option saturday">Saturday</li>
+                    <li class="option sunday ">Sunday</li>
+                    <li class="option monday ">Monday</li>
+                    <li class="option tuesday ">Tuesday</li>
+                    <li class="option wednesday ">Wednesday</li>
+                    <li class="option thursday ">Thursday</li>
+                    <li class="option friday ">Friday</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="inputTaskTitle" class="form-label">Add Task Title</label>
+          <input type="text" name="TaskTitle" class="form-control" required id="inputTaskTitle" placeholder="What do you want to call the Task ?">
+        </div>
+        <div class="mb-3">
+          <label for="inputTaskContent" class="form-label">Add Task Content</label>
+          <textarea id="inputTaskContent" required name="TaskContent" class="form-control" placeholder="Take Your Time " rows="6"></textarea>
+        </div>
+        <div class="mt-4" >
+        <input type="submit" class="form-control" value="Add Task To Clipboard" >
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!-- end menu values  -->
+  <!-- start modal -->
+  <div class="myModal" >
+    <div class="container p-0">
+      <div class="menu-head d-flex align-items-center justify-content-between">
+        <h5>Edit Task</h5>
+        <button class="btn border-0" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="formEdit" action="javascript:void(0)">
+        <div class="row p-3">
+          <div class="col-md-6" >
+            <div class="mb-3">
+              <div class="mb-3 mb-md-0">
+                <label for="editUserName" class="form-label">Edit User  Name</label>
+                <input type="text" name="editUserName" class="form-control"  id="editUserName">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="editTaskTitle" class="form-label">Edit Task Title</label>
+              <input type="text" name="editTaskTitle" class="form-control"  id="editTaskTitle">
+            </div>
+          </div>
+          <div class="col-md-6" >
+            <div class="mb-3">
+              <label for="editTaskContent" class="form-label">Edit Task Content</label>
+              <textarea id="editTaskContent"  name="TaskContent" class="form-control" rows="5"></textarea>
+            </div>
+          </div>
+          <div class="mt-4" >
+          <input type="submit" class="form-control" value="Add Task To Clipboard" >
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- end modal -->
+  <!-- start  landing  -->
+  <section>
+    <div class="container">
+      <div class="date row align-items-center" style="padding:14px ;">
+          <h1 class="big-header-day col-6 col-lg-4"></h1>
+          <div class="text-center col-6 col-lg-4 " >
+            <h3 class="mb-3 time" ></h3>
+            <h5 class="dataTime" ></h5>
+          </div>
+          <div class="userData col-lg-4 mb-">
+            <div class="me-2 taskLength" >All Task :  <span>0</span> </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 text-white text-center">
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="card" >
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Saturday</h5>
+                  <button class="btn p-0 addNew" data-save="saturday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="saturday">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card" >
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Sunday</h5>
+                  <button class="btn p-0 addNew" data-save="sunday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="sunday">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Monday</h5>
+                  <button class="btn p-0 addNew" data-save="monday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="monday">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card m-lg-0">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Tuesday</h5>
+                  <button class="btn p-0 addNew" data-save="tuesday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="tuesday">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card m-lg-0">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Wednesday</h5>
+                  <button class="btn p-0 addNew" data-save="wednesday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="wednesday">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card m-lg-0" >
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Thursday</h5>
+                  <button class="btn p-0 addNew" data-save="thursday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="thursday">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 text-white text-center">
+          <div class="row">
+            <div class="col-12">
+              <div class="card m-lg-0 last">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5>Friday</h5>
+                  <button class="btn p-0 addNew" data-save="friday" type="button" ><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="card-body parent" id="friday">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- start  landing  -->
+  <!-- font awesome -->
+  <script src="./js/vendors/all.min.js"></script>
+  <!-- main js logic  -->
+  <script src="./js/main.js" defer></script>
+</body>
+</html>
