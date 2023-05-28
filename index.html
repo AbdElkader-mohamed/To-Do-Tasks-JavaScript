@@ -60,6 +60,12 @@
     </div>
   </nav>
   <!-- end menu values  -->
+  <!-- start quotes alert  -->
+  <div class="myAlert">
+    <h2><i class="fa-solid fa-quote-left me-2"></i><span></span><i class="fa-solid fa-quote-right ms-2"></i></h2>
+    <small>|<span></span>|</small>
+  </div>
+  <!-- end quotes alert  -->
   <!-- start modal -->
   <div class="myModal" >
     <div class="container p-0">
@@ -88,13 +94,32 @@
             </div>
           </div>
           <div class="mt-4" >
-          <input type="submit" class="form-control" value="Add Task To Clipboard" >
+          <input type="submit" class="form-control" value="Edit Task in Clipboard" >
           </div>
         </div>
       </form>
     </div>
   </div>
   <!-- end modal -->
+  <!-- start modal2 -->
+  <div class="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header justify-content-end">
+          <button type="button" class="btn border-0 " id="close-modal2"><i class="fa-solid fa-xmark text-white"></i></button>
+        </div>
+        <div class="modal-body position-relative">
+          <p>Are You Sure <br> About Deleting This Task</p>
+          <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn form-control editTask "> <i class="fa-regular fa-pen-to-square me-2"></i> Edit</button>
+          <button type="button" class="btn form-control me-auto deleteTask "> <i class="fa-regular fa-trash-can me-2"></i> Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end modal2 -->
   <!-- start  landing  -->
   <section>
     <div class="container">
@@ -104,8 +129,9 @@
             <h3 class="mb-3 time" ></h3>
             <h5 class="dataTime" ></h5>
           </div>
-          <div class="userData col-lg-4">
+          <div class="userData col-lg-4 d-flex justify-content-evenly">
             <div class="me-2 taskLength" >All Task :  <span>0</span> </div>
+            <div class="me-2 taskEditLength" >Edited :  <span>0</span> </div>
           </div>
       </div>
       <div class="row">

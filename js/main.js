@@ -1,41 +1,56 @@
-
 /* بسم الله الرحمن الرحيم*/
 
-// set time  with timeZone in browser 
-let time;
-let dateTime;
+// set time  with timeZone in browser
+
+let time, dateTime, cairoDate;
 function clock() {
-  let timeZone = new Date() ;
-  let utc = timeZone.getTime()+(timeZone.getTimezoneOffset() * 60000) ;
-  let date = new Date(utc+(3600000 * +3)) ;
-  hours = date.getHours(),
-  minutes = date.getMinutes(),
-  seconds = date.getSeconds();
-  let amOrPm = hours >= 12 && hours < 24 ? "PM" : "AM" ;
-  hours = hours % 12 ;
-  hours = hours ? hours :12 ;
-  hours = hours < 10 ? `0${hours}` : hours ;
-  time = `${hours} : ${minutes < 10 ? `0${minutes}` : minutes} : ${seconds < 10 ? `0${seconds}` : seconds} ${amOrPm}`;
+  let timeZone = new Date();
+  let utc = timeZone.getTime() + timeZone.getTimezoneOffset() * 60000;
+  cairoDate = new Date(utc + 3600000 * +3);
+  (hours = cairoDate.getHours()),
+    (minutes = cairoDate.getMinutes()),
+    (seconds = cairoDate.getSeconds());
+  let amOrPm = hours >= 12 && hours < 24 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  hours = hours < 10 ? `0${hours}` : hours;
+  time = `${hours} : ${minutes < 10 ? `0${minutes}` : minutes} : ${
+    seconds < 10 ? `0${seconds}` : seconds
+  } ${amOrPm}`;
   document.querySelector(".time").textContent = time;
 }
-
+clock();
 // set date in browser
-let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday",];
+let days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 function getDate() {
-  let day = days[new Date().getDay()];
-  document.querySelector(".big-header-day").textContent = day;
-  let date = new Date();
-  dateTime = `${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()} / ${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1} / ${date.getFullYear()}`;
+  document.querySelector(".big-header-day").textContent =
+    days[cairoDate.getDay()];
+  dateTime = `${
+    cairoDate.getDate() < 10 ? `0${cairoDate.getDate()}` : cairoDate.getDate()
+  } / ${
+    cairoDate.getMonth() + 1 < 10
+      ? `0${cairoDate.getMonth() + 1}`
+      : cairoDate.getMonth() + 1
+  } / ${cairoDate.getFullYear()}`;
   document.querySelector(".dataTime").textContent = dateTime;
 }
 
 window.onload = (_) => {
   setInterval(clock, 500);
-  setInterval(getDate, 500)
-}
+  setInterval(getDate, 500);
+};
 
 let menu = document.querySelector("nav"),
   myModal = document.querySelector(".myModal"),
+  myModal2 = document.querySelector(".myModal2"),
   overlay = document.querySelector(".overlay"),
   inputUserName = document.getElementById("UserName"),
   editUserName = document.getElementById("editUserName"),
@@ -52,28 +67,35 @@ let menu = document.querySelector("nav"),
   FormList = document.querySelector(".form-list"),
   btnAdd = document.querySelectorAll(".addNew"),
   closeMenu = document.querySelector("#close-menu"),
-  closeModal = document.querySelector("#close-modal")
+  closeModal = document.querySelector("#close-modal"),
+  closeModal2 = document.querySelector("#close-modal2"),
+  deleteTask = document.querySelector(".deleteTask"),
+  editTask = document.querySelector(".editTask");
 
 // close menu tab and modal
-closeMenu.onclick = (_) =>{
+closeMenu.onclick = (_) => {
   inputUserName.value = "";
   inputTaskTitle.value = "";
   inputTaskContent.value = "";
   removeActiveClass(menu);
-} 
+};
+closeModal2.onclick = (_) => {
+  removeActiveClass(myModal2);
+};
 closeModal.onclick = (_) => {
   inputUserName.value = "";
   inputTaskTitle.value = "";
   inputTaskContent.value = "";
   removeActiveClass(myModal);
-} 
+};
 overlay.onclick = (_) => {
   inputUserName.value = "";
   inputTaskTitle.value = "";
   inputTaskContent.value = "";
   removeActiveClass(menu);
-  removeActiveClass(myModal)
-} 
+  removeActiveClass(myModal);
+  removeActiveClass(myModal2);
+};
 
 let allTasks = JSON.parse(localStorage.getItem("tasks")) ?? [];
 
@@ -93,8 +115,7 @@ editTaskNote();
 
 formAdd.addEventListener("submit", mainAddingFN);
 
-formEdit.addEventListener("submit", mainEditingFN)
-
+formEdit.addEventListener("submit", mainEditingFN);
 
 dragDrop();
 let drag = null;
@@ -104,14 +125,22 @@ function mainAddingFN() {
   let user = {
     id: Date.now(),
     day: taskDay.dataset.day,
-    date:dateTime,
-    time:time,
-    name:inputUserName.value,
-    title:inputTaskTitle.value,
-    content:inputTaskContent.value,
-  }
+    date: dateTime,
+    time: time,
+    name: inputUserName.value,
+    title: inputTaskTitle.value,
+    content: inputTaskContent.value,
+  };
   allTasks.push(user);
-  dataHandel(taskDay.dataset.day,Date.now(),inputTaskTitle.value,inputTaskContent.value,dateTime,time,inputUserName.value);
+  dataHandel(
+    taskDay.dataset.day,
+    Date.now(),
+    inputTaskTitle.value,
+    inputTaskContent.value,
+    dateTime,
+    time,
+    inputUserName.value
+  );
   addDataToLocalStorage(allTasks);
   inputUserName.value = "";
   inputTaskTitle.value = "";
@@ -120,82 +149,101 @@ function mainAddingFN() {
 }
 //main function editing from formEdit
 function mainEditingFN() {
-  removeActiveClass(myModal)
-  let targetEditingId = myModal.dataset.editid ;
-  allTasks.forEach(task => {
+  removeActiveClass(myModal);
+  let targetEditingId = myModal.dataset.editid;
+  allTasks.forEach((task) => {
     if (task.id == +targetEditingId) {
-      task.name = editUserName.value ;
-      task.title = editTaskTitle.value ;
-      task.content = editTaskContent.value ;
-      task.edit = true ;
+      task.name = editUserName.value;
+      task.title = editTaskTitle.value;
+      task.content = editTaskContent.value;
+      task.edit = true;
     }
-    addDataToLocalStorage(allTasks)
-    window.location.reload()
-  })
+    addDataToLocalStorage(allTasks);
+    window.location.reload();
+  });
 }
 // function handel data select box
-options.forEach(option => {
-  option.addEventListener("click", _ => {
-    dropdown.classList.toggle("open"); 
+options.forEach((option) => {
+  option.addEventListener("click", (_) => {
+    dropdown.classList.toggle("open");
     FormList.classList.remove("select");
     taskDay.textContent = document.querySelector(".option.active").textContent;
-    taskDay.dataset.day = document.querySelector(".option.active").textContent.toLowerCase() ;
+    taskDay.dataset.day = document
+      .querySelector(".option.active")
+      .textContent.toLowerCase();
   });
-})
-// task day in form arrow && toggle menu 
-taskDay.onclick = _ =>{
+});
+// task day in form arrow && toggle menu
+taskDay.onclick = (_) => {
   FormList.classList.toggle("select");
-  dropdown.classList.toggle("open"); 
+  dropdown.classList.toggle("open");
 };
 // function to add active class && select item
 function handel(modalOrMenu) {
-  modalOrMenu.forEach(btn => {
-    btn.onclick = _ => {
-      handelWeekDayInSelectedBox(btn.dataset.save)
-      addActiveClass(menu)
-    }
-  })
+  modalOrMenu.forEach((btn) => {
+    btn.onclick = (_) => {
+      handelWeekDayInSelectedBox(btn.dataset.save);
+      addActiveClass(menu);
+    };
+  });
 }
 // function controls of select box
 function handelWeekDayInSelectedBox(btn) {
-  options.forEach(option => {
+  options.forEach((option) => {
     option.classList.remove("active");
     option.removeAttribute("selected");
-    if (option.classList.contains(btn) ) {
+    if (option.classList.contains(btn)) {
       option.classList.add("active");
-      option.setAttribute("selected",true);
-      taskDay.textContent = document.querySelector(".option.active").textContent;
-      taskDay.dataset.day = document.querySelector(".option.active").textContent.toLowerCase() ;
+      option.setAttribute("selected", true);
+      taskDay.textContent =
+        document.querySelector(".option.active").textContent;
+      taskDay.dataset.day = document
+        .querySelector(".option.active")
+        .textContent.toLowerCase();
     }
-  })
+  });
 }
-// function to remove the task from clipboard  
+// function to remove the task from clipboard
 function removeTaskNote() {
-document.querySelectorAll(".close").forEach(card  => { 
-  card.addEventListener("click", function(e){
-    let deletedNote = e.target.closest(".task") ;
-    deletedNote.remove();
-    allTasks = allTasks.filter(acc => acc.id != +deletedNote.dataset.id )
-    addDataToLocalStorage(allTasks)
-    })
-  })
+  document.querySelectorAll(".close").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      toggleModalEdit(myModal2, e);
+      addActiveClass(myModal2);
+      deleteTask.onclick = (_) => {
+        let deletedNote = card.closest(".task");
+        deletedNote.remove();
+        allTasks = allTasks.filter((acc) => acc.id != +deletedNote.dataset.id);
+        addDataToLocalStorage(allTasks);
+        removeActiveClass(myModal2);
+        window.location.reload();
+      };
+      editTask.onclick = (_) => {
+        toggleModalEdit(myModal, e);
+        removeActiveClass(myModal2);
+      };
+    });
+  });
 }
-// function to edit the task from clipboard  
+// function to edit the task from clipboard
 function editTaskNote() {
-document.querySelectorAll(".edit").forEach(card  => { 
-  card.addEventListener("click", function(e){
-    let editNote = e.target.closest(".task") ;
-    myModal.setAttribute("data-editid", editNote.dataset.id);
-    addActiveClass(myModal)
-    allTasks.forEach(task => {
-      if (task.id == editNote.dataset.id) {
-        editUserName.value = task.name;
-        editTaskTitle.value = task.title;
-        editTaskContent.value = task.content;
-      }
-    })
-    })
-  })
+  document.querySelectorAll(".edit").forEach((card) => {
+    card.addEventListener("click", function (e) {
+      toggleModalEdit(myModal, e);
+    });
+  });
+}
+// toggle Modal Edit
+function toggleModalEdit(modal, e) {
+  let editNote = e.target.closest(".task");
+  modal.setAttribute("data-editid", editNote.dataset.id);
+  addActiveClass(modal);
+  allTasks.forEach((task) => {
+    if (task.id == editNote.dataset.id) {
+      editUserName.value = task.name;
+      editTaskTitle.value = task.title;
+      editTaskContent.value = task.content;
+    }
+  });
 }
 // function remove Active Class from modal && menu
 function removeActiveClass(item) {
@@ -209,35 +257,109 @@ function addActiveClass(item) {
 }
 // function add && remove
 function checker([...params]) {
-  params.forEach( param => {
-    param.addEventListener("click", function(){
-      params.forEach(param => {
-          param.classList.remove("active");
-          this.classList.add("active");
+  params.forEach((param) => {
+    param.addEventListener("click", function () {
+      params.forEach((param) => {
+        param.classList.remove("active");
+        this.classList.add("active");
       });
-    })
+    });
   });
-};
+}
 // add && update from localStorage
 function addDataToLocalStorage(arrOfTasks) {
-  localStorage.setItem("tasks",JSON.stringify(arrOfTasks))
-  document.querySelector(".taskLength span").textContent = arrOfTasks.length ;
+  localStorage.setItem("tasks", JSON.stringify(arrOfTasks));
+  document.querySelector(".taskLength span").textContent = arrOfTasks.length;
+  getEditTasksLength(arrOfTasks);
+}
+function getEditTasksLength(tasks) {
+  let arr = [];
+  tasks.forEach((task, i) => {
+    if (task.edit) {
+      arr.push(task);
+      document.querySelector(".taskEditLength span").textContent = arr.length;
+    }
+  });
 }
 // checking from  day  on week
 function getDataFromLocalStorage(allTasks) {
-  let json = JSON.parse(localStorage.getItem("tasks")) ;
-  if(localStorage.getItem("tasks")){
+  let json = JSON.parse(localStorage.getItem("tasks"));
+  if (localStorage.getItem("tasks")) {
     json.forEach((obj) => {
-    if(obj.day === "saturday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "sunday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "monday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "tuesday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "wednesday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "thursday" )dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-    if(obj.day === "friday" ) dataHandel(obj.day,obj.id,obj.title,obj.content,obj.date,obj.time,obj.name);
-  });
+      if (obj.day === "saturday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "sunday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "monday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "tuesday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "wednesday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "thursday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+      if (obj.day === "friday")
+        dataHandel(
+          obj.day,
+          obj.id,
+          obj.title,
+          obj.content,
+          obj.date,
+          obj.time,
+          obj.name
+        );
+    });
+    getEditTasksLength(json);
   }
-  document.querySelector(".taskLength span").textContent = allTasks.length ;
+  document.querySelector(".taskLength span").textContent = allTasks.length;
 }
 // function creating tasks in clipboard
 function dataHandel(target,taskId,taskTitle,taskContent,taskDate,taskTime,userName) {
@@ -261,46 +383,74 @@ function dataHandel(target,taskId,taskTitle,taskContent,taskDate,taskTime,userNa
     </div>
   </div>
   `;
-};
-// function for set different color to edited task 
+}
+// function for set different color to edited task
 function editingAnimation() {
   if (localStorage.getItem("tasks")) {
-    JSON.parse(localStorage.getItem("tasks")).forEach(task => {
+    JSON.parse(localStorage.getItem("tasks")).forEach((task) => {
       if (task.edit) {
-        document.querySelectorAll(".task").forEach(taskBody => {
-          if (taskBody.getAttribute("data-id") == task.id) taskBody.classList.add("edited");
-        })
+        document.querySelectorAll(".task").forEach((taskBody) => {
+          if (taskBody.getAttribute("data-id") == task.id)
+            taskBody.classList.add("edited");
+        });
       }
-    })
+    });
   }
 }
-// function to drag and drop tasks  and handel data in it 
+// function to drag and drop tasks  and handel data in it
 function dragDrop() {
-document.querySelectorAll(".task").forEach(task => {
-  task.addEventListener("dragstart", _=> {
-    drag = task ;
+  document.querySelectorAll(".task").forEach((task) => {
+    task.addEventListener("dragstart", (_) => {
+      drag = task;
+    });
+    task.addEventListener("dragend", (_) => {
+      drag = null;
+    });
+  });
+  weeks.forEach((week) => {
+    week.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      week.parentElement.style.background = "rgba(255, 255, 255, 0.8)";
+    });
+    week.addEventListener("dragleave", (_) => {
+      week.parentElement.style.background = "rgba(255, 255, 255, 0.7)";
+    });
+    week.addEventListener("drop", (_) => {
+      allTasks.forEach((task) => {
+        if (task.id == drag.dataset.id) {
+          task.day = week.id;
+          addDataToLocalStorage(allTasks);
+        }
+      });
+      week.parentElement.style.background = "rgba(255, 255, 255, 0.7)";
+      week.prepend(drag);
+    });
+  });
+}
+
+
+let myAlert = document.querySelector(".myAlert");
+fetch("https://type.fit/api/quotes")
+  .then(function (response) {
+    return response.json();
   })
-  task.addEventListener("dragend", _ => {
-    drag = null ;
-  })
-})
-weeks.forEach(week => {
-  week.addEventListener("dragover" ,e =>{
-    e.preventDefault()
-    week.parentElement.style.background = "rgba(255, 255, 255, 0.7)" ;
-  })
-  week.addEventListener("dragleave" ,_ => {
-    week.parentElement.style.background = "rgba(255, 255, 255, 0.5)" ;
-  })
-  week.addEventListener("drop", _ =>{
-    allTasks.forEach(task => {
-      if (task.id == drag.dataset.id) {
-        task.day = week.id ;
-        addDataToLocalStorage(allTasks)
-      }
-    } )
-    week.parentElement.style.background = "rgba(255, 255, 255, 0.5)" ;
-    week.prepend(drag)
-  } )
-})
+  .then(function (data) {
+    HandelQuotes(data);
+  });
+
+function HandelQuotes(data) {
+  let stop = 10000;
+  let time = 60000 ;
+  function autoChange() {
+  myAlert.classList.add("isVisible");
+  addDataAlert(data)
+  setTimeout(autoDelete, stop)
+  }
+  window.onload = setInterval(autoChange, time)
+  function addDataAlert(data) {
+    let random = data[Math.trunc(Math.random() * data.length)]
+    myAlert.querySelector("h2 span").textContent = random.text ;
+    myAlert.querySelector("small span").textContent = random.author == null ?"Abd ElKader Mohamed" : random.author ;
+  }
+  function autoDelete() {myAlert.classList.remove("isVisible");}
 }
